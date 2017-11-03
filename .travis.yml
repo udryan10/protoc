@@ -1,0 +1,14 @@
+env:
+  global:
+  - secure: U7tszf3TXetSgl5+aANTqtky3yZ0R/82S3P4Zr23iqWh3Q3l0IPEv9FP/wh8N5xhp4acQe3MW7KnYAcHATQgP3+WClgU38NsKoIR2+fo+8nSI3Km6wLL91hK0SRvl27ixepyI+CWy9/TJplKn59t1l/fIk/Gcjn6qF9J0lNwm4Z8lKp2A1n3J6AviEDLT971r+xr0wwWkN3ZzSig+4cQzHOd4wjm/pptOiH6m2LagNTX4NleUwA1M70Bi/o+gMcZ8lihsjJuITnEAHFK3LK9ompgGhpS4lxOpl+Qqatc02LSMfpyGDItdp5/JNJM/ZzA2AYq5AF9P2736wLPl7QcRpsbsXp57ce4KL69GTvVePfD6ruHNfRk31bT33o4jQrYg75H8UGydWtrs/i8kkgZRCSlLdwNLCI1e9OK1NXY5Cu2oi5hfDtX0YpkyHKU8ENDK4mzYZaI2pAryoqp+iwAKkoQ4o54vwoWX7W6/14FtASMMMdzSDwhtqDd+jGI3ASsUI+P4iLcAyoUmrHoTK0+G8rz7KNypLqs2VsT969rFstM+PYkIlpme2K2ws2lJEAMQWmbSlCR9JDh+RAYAnncBrf2HGvb/I3KZjkg6n1oO1FfYvxkaXWpi8c6nukp2WM2s8VocF2N6XhigUwbnDpba/pcEJ9fwc8TxUDLy2OyprM=
+  - secure: S/a1+haJpyBKp9U1IlNa5yQKkl00+5anoM0Jsi+NyhYYqvWwLw5ZcQVR1Tkej5pOaAcCOxbClN/BSpKTfHF++SVBkRgByStU411haeN/8Onw1OsIAiaBC3FQMzKcilZPlKdw0zVx7Sn4e7ecRL9nPZKsb0qnO1V2cxa/CI3yjmosMp1UM/b9PjN5GVO0qMQW68+RRS09GxXPwarCQOD7FmWXOBpeuEjVOn2PPKGiqbg+8Mbu8+GRAfOE0SFh0jxD9nmVpJnqyIh0NQmazBu/ijcBSWex8WJJIGt3yrSeGsJW20pwrLZvO3f3I/A7U7cKHQNwRhrur0JVnQqNbs5oXgkSBH2uEym50w+Sz34sfS73+S604ZC6/r/aastk5rilR1YtNLZ6Sw/UK7zffswuQzG4NSnW84BnBVddffZnlL2+KskCRETsqOClmADBowetIr/uMD4nBjXhPLbjh10yMqTtKd1MHsIKsv7BlK7FI18MtnwkCTJM7sF1Qt2enxFVOmctrFIJa+1tDEpeOB3kJd/Dxj9+FRhPwl5LOiz2o3wjQmQrqhXRl+EAX0oMb7JvFqtJWykk2nrJ1JO1UIQ7wvG+N6E1dJJqsP9MyMNnikP/o7G/VuDPd3B2HSWN2PA+eRNcOxUC4EXRyTDfZl351RkLMfDsHxnfoHnB1LM5aGo=
+  - secure: ywgXezz5WM3jb8G8CMPbybVDobWY/O06uhtsHBGWn6WjRPYPZNqxD3Cl8wqF/9nRCyDeAzKvy7trfgK8cJgIjscrqzH5rAM3DDyIZABmulpwMYuAsvfBtyQZpGJR++mhgnlWkIGIYujf79E7yyFEGOGcXWxxZyJnqcxAZ/CukxLeyT+jsQrLSyBYoD2HEkhOnSDhHVqVPo42LTFUdNQVVt6cI3n9OsOJCn+4XwZkWCG6nWPJAJhIouo9EGA4x4SmeHL+b59V5ms/UcTvacz0J1NbJ0ZezKYM2d4BcLQC5OSaBHTt8CApas7r7F+1uc0L6xgFFyVzRd+HfMcYlhCf9fpBZsxxto6AAWf/ZoZPyImYR4SWm5sXI8tweJf8OMFXbxbSSiivUgHALenDjQC57vIZARkp3B3rBPWcRplZcDl/AlOfovDAdEdhNE5VxggtGo/rXZmj41BCGWJMvdlAqKgfiW0Cjj+sJ7rbsozsC9ildffDx1sZyB/ap5s8xJcUNz5CVvmMt4biMfiq2wb2Vb9rOQceClmfHrXwQfMFZFoilFCj4tizCpbneoS7t5w5nodE2f6qqP3w2zr6fxrVW6Idq0popaxc4BKAe6a422ptcWTdtLM+dM+wbrjQ+/1Yrvw3vC7iMMc7KsrffvqtL0bBZKJ9mhJB9SxtibJh+80=
+  - COMMIT=${TRAVIS_COMMIT::8}
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=udryan10/protoc
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build -f Dockerfile -t $REPO:$COMMIT .
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
