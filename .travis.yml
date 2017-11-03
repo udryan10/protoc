@@ -8,17 +8,19 @@ env:
   - secure: oL0584BN+dGsXrYC12uGon0DX8CCuVT/ctKAOD3AaLz3peYZ4dM0/84iIfG6Vc/ykXV8x8FkYnQLdB0rtaJGaOav7sAJZyclAgJnvuz8lPSIOrixjKVCoDiI6RA2NUYCcF4Tf6pAx1h4CmKeI8/aLjDMXL8y25b4ko8kYoJnFV7rGXxvP1nN3/q9/lEeBTppBpDCTCQUxzoX9QL6OtmNiHW66atcXuz8I1rCRdheslTYhpJv5/hCbuyJOYIOUt9XLBaH2q5inbRIG09xSHND8WmxUZyKdiZwP8E1/Vs07YBBcMuh91lL0b8qnz26UdNzEw9kV3yz/90hhJjDLyLGw6TyicucVKsAGLrj1YK+vdyEU+wZF+GnJL+njXrDqEupXGC+ic1wUn8BxT5TuGHLj0E5GbQvj4qHKD/xDRH29zN6olUbSLdCBkUAG71Ov1PqUwKsCvzQ1HRGz5dne4okak+mIN8L6h4IjxdVuCLlWLnlGBuWi+3Q6wJNv4LCjeQJoVMiyqTPdBJKkyR6AEsoSbsWpZwfh5s5yZRj7JaxQ0oIO00AiniS5rfWtn3RY2kJHxNE1iBtLj4R8Kc6gz7+yTCKFuR/6CKKdIcGZp38ECHEsh4jCT/wuULPTo01tiKEObY0RKsB82OPrOIlcGiRofchQZwVKLRSMctt7ZW9d1s=
   - secure: vxLw8Ab0aJ2Dzz2/FHEK8p/EpJNQePbhPK3Z2x/4Ju/ajILc703K9lyhoOYRmyrSHPinNTf7h9Sgb/bLo8mFI/Iz06JpFXPhHykjdTGjhQpam4vfx0XZ9MHDeHKqdBpakqFA5jRI+R2jf/FwVKPFBK/bnwPZ2vNKOJw0DUnkiD8+LKUjJhFJ1xfLkQZC+b90x+QoAtnoFgyJIZOQQ3uVvD6XaCQtAsKv88y4aqE5izKijwCLKJkEgOlNyZBZcVYu5oyQaigzItuBRx8BPviUR0nQe3pQRxP697DD3tiCA1LawHfZEtO4Pw8WpEuZgO58gVrECxhUrgT8dn//2J6ec9MCcRqKXSED4o/F00Q4pUulYkbBY3DzDHyyHWDKz6L/YLXTaSmSUETqj6LGiFL2uHNY30VPMaaloUcoDL29FRXP5SQj8nr9Xh4NsoS2cbG7yjRSF7i6g+Sc2GC/gscJJjJclMkXXiT6hEyqcQWlv9J36u3+FlfTT9WHg6zR/Q5yie7fXNmOmLG5ZuU9JEVw/VF48/VffNrwK6BwObcbYPsSVy5vn6RzhK6no6mg0zRCyFsTzeWXbw0bm0HVCNfudQDlXLl5aOgygbwvTZHPzA1NHXMsjUknsm546z3zBAmVOkyYjaWVS1S8gQBRyLQ+z1/AR5Yp+HKoL8+gQOOEx+Y=
   - secure: zs16gPREUZxly5UtyrTvzvaXWigivjHPRwpWAzk7ZDnrpRV+Zkg+C7ERjcHfT/MuhWT40w0kBRWO0cncR1ucEMB2dMn7q1nXaKiJ9q07Knr47EAn+QX6Ambm3uUK2GcNiiBBGs+nZkVIxKeB0KxWLfTmmHn/aVQkZfe9AOxhgxRLEO6Oxu+YrGjgPc6lMInfEpdQfgx6XEArBw8kXw8LkTh2ePnj5RMSwBkYkvLh4IWHmBHrJYm3YMk4KSuKQEZMrKKBIGLBth4uJ9PdJyH/dUcplwqXY5jSSH25LY9CAusCP/eVY1VoSv8ps6jT30cai7qBFfOpNSDdR/F/s7j1WlXledp/H5bDSIW3Lk8sskFeMe8P64V/RIVlKkOm/Z/e8DlgHzLjYzlLeoJI3fHqLpCNwkET313TfLORvtCunqL4YlJeJGj/xxddg0/Ke4a43v6xK0Cp+ZP8V2daETZrC8Fg0O+m4zEag+lRGNkgbc7E++M+9QnlTBYvQCaq2iK2mEGuQqCrfpeRkPVJQHWGtIkUy+/gjRHtatPoNrFbEYVp7NK97kkVYEySwTU6IuucOZe/azqUQkozbu9/DD/iDqDfInGhLusj71Le7sR3enZvYgJGRGVeplmgFSi/1MoRLb0IzUDNQoQtLAFh7LCviXN4yFA9t9/aUSoboXVbVJA=
+before_install:
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y install docker-ce
 after_success:
-- docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
+- docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 - export REPO=udryan10/protoc
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH
   ; fi`
 - docker build -f Dockerfile -t $REPO:$COMMIT .
 - docker tag $REPO:$COMMIT $REPO:$TAG
 - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
-- docker push $REPO
-deploy:
-  provider: script
-  script: push.sh $REPO:$TAG
-  on:
-    branch: master
+-  if [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker push $REPO;
+   fi
