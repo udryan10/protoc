@@ -5,7 +5,6 @@ A repo to manage docker images for the protobuff binary (protoc), in order to st
 Initially this was built with the focus on compiling for grpc and protbufs in golang, but can be easily extended to add support for other languages as needed.
 
 
-
 Usage:
 ```
 docker run --rm -v $(pwd):$(pwd) -w $(pwd) test-protoc --go_out=plugins=grpc:. *.proto
