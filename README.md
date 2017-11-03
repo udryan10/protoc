@@ -1,6 +1,6 @@
 # protoc
 
-A repo to manage docker images for the protobuy compiler (protoc), in order to standardize on protoc and grpc versions across developer machines.
+A repo to manage docker images for the protobuf compiler (protoc), in order to standardize on protoc and grpc versions across developer machines.
 
 Initially this was built with the focus on compiling for grpc and protbufs in golang, but can be easily extended to add support for other languages as needed.
 
