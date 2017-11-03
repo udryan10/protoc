@@ -10,7 +10,7 @@ Usage:
 docker run --rm -v $(pwd):$(pwd) -w $(pwd) udryan10/protoc --go_out=plugins=grpc:. *.proto
 ``` 
 
-A few other popular go protobuf plugins compiled into the image to provide some varity:
+A few other popular go protobuf plugins compiled into the image to provide some variety:
 ```
 github.com/golang/protobuf/protoc-gen-go 
 github.com/gogo/protobuf/protoc-gen-gofast 
