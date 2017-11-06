@@ -1,1 +1,0 @@
-docker push $1
