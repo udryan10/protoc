@@ -7,7 +7,7 @@ Initially this was built with the focus on compiling for grpc and protbufs in go
 
 Usage:
 ```
-docker run --rm -v $(pwd):$(pwd) -w $(pwd) udryan10/protoc --go_out=plugins=grpc:. *.proto
+docker run --rm -v $(pwd):$(pwd) -w $(pwd) udryan10/protoc:3.1.4-grpc1.6.7 --go_out=plugins=grpc:. *.proto
 ``` 
 
 A few other popular go protobuf plugins compiled into the image to provide some variety:
