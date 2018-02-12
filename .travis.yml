@@ -15,11 +15,11 @@ before_install:
   - sudo apt-get update
   - sudo apt-get -y install docker-ce
 after_success:
-- docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 - export REPO=udryan10/protoc
 - docker build -f Dockerfile -t $REPO:$COMMIT .
 - docker tag $REPO:$COMMIT $REPO:$VERSION
 - docker tag $REPO:$COMMIT $REPO:latest
 -  if [ "$TRAVIS_BRANCH" == "master" ]; then
+     docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
      docker push $REPO:$VERSION;
    fi
